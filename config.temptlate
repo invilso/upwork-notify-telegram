@@ -1,0 +1,47 @@
+FILE_POSTED = 'posted.txt'
+USER_ID = 0000000
+TOKEN = ''
+UPWORK_URL = 'https://www.upwork.com/ab/feed/jobs/rss?q=python+django&job_type=fixed&proposals=0-4%2C5-9%2C10-14%2C15-19&duration_v3=week&verified_payment_only=1&sort=recency&paging=0%3B10&api_params=1&securityToken=3e6d515c6d38912e38b0713121abd31f2c530578fbe8bb09ba05549e9035c3ae1a07ac4f60d92d73d5b386468403f4c042a367fad86dec60fbf73e9aebc035a6&userUid=1482158248381833216&orgUid=1482158248381833217'
+SUBS = [
+    {
+        'template': '&nbsp;',
+        'sub': ''
+    },
+    {
+        'template': '<br />',
+        'sub': '\n'
+    },
+    {
+        'template': '&#039;',
+        'sub': "'"
+    },
+    {
+        'template': '&rsquo;',
+        'sub': "'"
+    },
+    {
+        'template': '<b>',
+        'sub': ""
+    },
+    {
+        'template': '</b>',
+        'sub': ""
+    },
+    {
+        'template': r'<a href=".+">click to apply</a>',
+        'sub': ""
+    },
+    {
+        'template': r'<b>Posted On</b>: .+<br />',
+        'sub':""
+    },
+    {
+        'template': r'     ',
+        'sub': ' '
+    },
+    {
+        'template': r'Skills:',
+        'sub': 'Skills: '
+    }
+    
+]
