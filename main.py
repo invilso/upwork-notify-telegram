@@ -43,33 +43,34 @@ def send_to_telegram(text):
             
 
 while True:
-    x = requests.get(config.UPWORK_URL)
-    try:
-        rss = xmltodict.parse(x.text).get('rss')
-    except:
-        time.sleep(30*60)
-        continue
-    
-    channel = rss.get('channel')
-    if not channel:
-        time.sleep(30*60)
-        continue
-    
-
-    items = channel.get('item')
-    
-    for k, item in enumerate(items):
-        link = item.get('link')
-        works = get_posted_works()
-        if not works:
-            add_link_to_file(link)
+    for upwork in config.UPWORK_URLS:
+        x = requests.get(upwork['link'])
+        try:
+            rss = xmltodict.parse(x.text).get('rss')
+        except:
+            time.sleep(30*60)
             continue
-        if not work_is_exist(works, link):
-            add_link_to_file(link)
-            text = f'''{item.get('title')}\n\n{item.get('description')}\n\n{item.get('pubDate')}\n{link}'''
-            text = prepare_text_to_send(text)
-            send_to_telegram(text)
-            print(text)
-        else:
-            print('is exist')
-    time.sleep(15*60)
+        
+        channel = rss.get('channel')
+        if not channel:
+            time.sleep(30*60)
+            continue
+        
+
+        items = channel.get('item')
+        
+        for k, item in enumerate(items):
+            link = item.get('link')
+            works = get_posted_works()
+            if not works:
+                add_link_to_file(link)
+                continue
+            if not work_is_exist(works, link):
+                add_link_to_file(link)
+                text = f'''{item.get('title')} [{upwork['name']}]\n\n{item.get('description')}\n\n{item.get('pubDate')}\n{link}'''
+                text = prepare_text_to_send(text)
+                send_to_telegram(text)
+                print(text)
+            else:
+                print('is exist')
+        time.sleep(15*60)
